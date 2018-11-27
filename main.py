@@ -52,18 +52,19 @@ class AuthenticationHandler(tornado.web.RequestHandler):
 			return
 
 		# Authenticate user
-		result = await auth.authenticate(loginDetails)
-		if result:
-			# Set cookies
-			# very secure, please do not hack thank you
-			self.set_cookie("authenticated", "true")
-			unameCookie = tornado.escape.url_escape(loginDetails["username"])
-			self.set_cookie("username", unameCookie)
-			self.redirect("/profile")
-			return
-		else:
+		try:
+			result = await auth.authenticate(loginDetails)
+		except exceptions.UserNonexistantException:
 			await login_error("Incorrect details")
 			return
+
+		# Set cookies
+		# very secure, please do not hack thank you
+		self.set_cookie("authenticated", "true")
+		unameCookie = tornado.escape.url_escape(loginDetails["username"])
+		self.set_cookie("username", unameCookie)
+		self.redirect("/profile")
+		return
 
 # Handle profile page
 class ProfileHandler(tornado.web.RequestHandler):
