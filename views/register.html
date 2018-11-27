@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Register</title>
+	</head>
+	<body>
+		<h1>Register new user</h1>
+		<form action="register" method="post">
+			<label for="username">Username</label>
+			<input type="text" name="username" id="username">
+			
+			<label for="password">Password</label>
+			<input type="password" name="password" id="password">
+
+			<label for="age">Age</label>
+			<input type="number" name="age" id="age">
+
+			<input type="submit" value="Submit">
+		</form>
+		{% block error %}{% end %}
+		<a href="/auth">Log in with existing account</a>
+	</body>
+</html>
+
